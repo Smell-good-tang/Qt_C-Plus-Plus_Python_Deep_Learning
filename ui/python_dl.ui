@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Python_deep_learning</class>
+ <widget class="QMainWindow" name="Python_deep_learning">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CXR肺（胸）部疾病分类</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">#centralwidget{border-image: url(:/Pictures/python_dl.jpg);}
+
+/* 半透明医疗按钮 - 基础版 */
+QPushButton {
+    background-color: rgba(0, 119, 182, 0.85);  /* 主蓝半透明 */
+    border: 1px solid rgba(0, 93, 143, 0.7);    /* 半透明边框 */
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.95);           /* 轻微透明文字 */
+    font-family: 'Segoe UI';
+    font-size: 24px;
+    padding: 10px 20px;
+    min-width: 100px;
+}
+
+/* 悬停状态（透明度降低增强可点击性） */
+QPushButton:hover {
+    background-color: rgba(0, 93, 143, 0.9);
+    border-color: rgba(0, 74, 115, 0.85);
+}
+
+/* 按下状态（模拟材质按压效果） */
+QPushButton:pressed {
+    background-color: rgba(0, 74, 115, 0.95);
+    border-color: transparent;
+    padding: 11px 21px 9px 19px;
+}
+
+/* 禁用状态（保持透明层次） */
+QPushButton:disabled {
+    background-color: rgba(176, 190, 197, 0.6);
+    border-color: rgba(144, 164, 174, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* 基础标签样式（医疗蓝主题） */
+QLabel {
+    background-color: rgba(169, 169, 169, 0.85); /* 使用浅灰色，透明度与原色相同 */
+    border: 1px solid rgba(0, 93, 143, 0.7);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.95);
+    font-family: 'Segoe UI';
+    font-size: 24px;
+    min-width: 100px;
+}
+
+/* 信息状态标签 */
+QLabel[state=&quot;info&quot;] {
+    background-color: rgba(109, 212, 163, 0.8);  /* 生命绿 */
+    border-color: rgba(76, 175, 80, 0.6);
+}
+
+/* 警示状态标签 */
+QLabel[state=&quot;warning&quot;] {
+    background-color: rgba(239, 83, 80, 0.8);    /* 警示红 */
+    border-color: rgba(198, 40, 40, 0.6);
+    animation: pulse-red 1.2s infinite;
+}
+
+/* 禁用状态 */
+QLabel:disabled {
+    background-color: rgba(176, 190, 197, 0.6);
+    border-color: rgba(144, 164, 174, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* 动态数据标签 */
+QLabel[dynamic=&quot;true&quot;] {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* 可交互标签（模拟按钮效果） */
+QLabel[interactive=&quot;true&quot;]:hover {
+    background-color: rgba(0, 93, 143, 0.9);
+    cursor: pointer;
+}
+
+QLabel[interactive=&quot;true&quot;]:pressed {
+    background-color: rgba(0, 74, 115, 0.95);
+}</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,10">
+      <item>
+       <widget class="QPushButton" name="btn_switch_model">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>模型切换</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_select_image">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>选择图片</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="upload_image">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>上传图片</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="8,9">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="btn_predict">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>预测</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_terminate">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>中断</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,10">
+        <item>
+         <widget class="QLabel" name="heatmap">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>热图</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="predict_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>300</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>标签</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

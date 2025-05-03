@@ -11,32 +11,63 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>肺部疾病分类模型选择</string>
+   <string>CXR 肺（胸）部疾病分类模型选择</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">#centralwidget{border-image: url(:/Pictures/mainwindow.jpg);}</string>
+    <string notr="true">#centralwidget{border-image: url(:/Pictures/mainwindow.jpg);}
+
+/* 半透明医疗按钮 - 基础版 */
+QPushButton {
+    background-color: rgba(0, 119, 182, 0.85);  /* 主蓝半透明 */
+    border: 1px solid rgba(0, 93, 143, 0.7);    /* 半透明边框 */
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.95);           /* 轻微透明文字 */
+    font-family: 'Segoe UI';
+    font-size: 24px;
+    padding: 10px 20px;
+    min-width: 100px;
+}
+
+/* 悬停状态（透明度降低增强可点击性） */
+QPushButton:hover {
+    background-color: rgba(0, 93, 143, 0.9);
+    border-color: rgba(0, 74, 115, 0.85);
+}
+
+/* 按下状态（模拟材质按压效果） */
+QPushButton:pressed {
+    background-color: rgba(0, 74, 115, 0.95);
+    border-color: transparent;
+    padding: 11px 21px 9px 19px;
+}
+
+/* 禁用状态（保持透明层次） */
+QPushButton:disabled {
+    background-color: rgba(176, 190, 197, 0.6);
+    border-color: rgba(144, 164, 174, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="btn_Example_1">
+     <widget class="QPushButton" name="btn_Self_FAGCFN">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(186, 197, 53, 255), stop:1 rgba(158, 249, 255, 255));</string>
-      </property>
       <property name="text">
-       <string>Example_1</string>
+       <string>Self-FAGCFN（针对肺部疾病的单标签疾病分类）</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="btn_Example_2">
+     <widget class="QPushButton" name="btn_ALCFA_Net">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -44,11 +75,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb
        </sizepolicy>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(158, 249, 255, 255), stop:1 rgba(186, 197, 53, 255));</string>
+       <string notr="true"/>
       </property>
       <property name="text">
-       <string>Example_2</string>
+       <string>ALCFA-Net（针对肺（胸）部疾病的多标签疾病分类）</string>
       </property>
      </widget>
     </item>

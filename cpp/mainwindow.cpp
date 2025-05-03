@@ -1,28 +1,29 @@
 #include "../include/mainwindow.h"
 
-#include "../include/python_deep_learning.h"
+#include "../include/login.h"
+#include "../include/python_dl.h"
 #include "ui_mainwindow.h"
 
-using namespace enum_class_python_deep_learning;
+using namespace enum_class_python_dl;
 
 MainWindow::MainWindow(QWidget *parent, QFont *fontt) : QMainWindow(parent), ui(new Ui::MainWindow), font(*fontt) { ui->setupUi(this); }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::on_btn_Example_1_clicked()
+void MainWindow::on_btn_Self_FAGCFN_clicked()
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->close();
-    Python_deep_learning *python_deep_learning = new Python_deep_learning(nullptr, Model_categories::Example_1, &font);
-    python_deep_learning->show();
+    Python_deep_learning *python_dl = new Python_deep_learning(nullptr, Model_categories::Self_FAGCFN, &font);
+    python_dl->show();
 }
 
-void MainWindow::on_btn_Example_2_clicked()
+void MainWindow::on_btn_ALCFA_Net_clicked()
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->close();
-    Python_deep_learning *python_deep_learning = new Python_deep_learning(nullptr, Model_categories::Example_2, &font);
-    python_deep_learning->show();
+    Python_deep_learning *python_dl = new Python_deep_learning(nullptr, Model_categories::ALCFA_Net, &font);
+    python_dl->show();
 }
 
 // 键盘按键，控制按钮
@@ -43,6 +44,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Escape: {
             this->setAttribute(Qt::WA_DeleteOnClose);
             this->close();
+            login *log = new login(nullptr, &font);
+            log->show();
             break;
         }
         default:

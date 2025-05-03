@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/GCN_lr_de_ori_f_schedu-3.pth</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/GCN_28a0296c0f154a36905dd107bf9fe067.pth</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/Data_Entry_2017_v2020.csv</file>
+        <file>Pictures/login.jpg</file>
+        <file>Pictures/mainwindow.jpg</file>
+        <file>Pictures/python_dl.jpg</file>
+        <file>Pictures/regist.jpg</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/dataset.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/dropblock.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/heatmap_ALCFA_Net.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/heatmap_Self_FAGCFN.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/model_ALCFA_Net.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/model_Self_FAGCFN.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/modules_ALCFA_Net.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/modules_Self_FAGCFN.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/Pre_GCN_ALCFA_Net.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/Pre_GCN_Self_FAGCFN.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/predict_ALCFA_Net.py</file>
+        <file>D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/predict_Self_FAGCFN.py</file>
+    </qresource>
+</RCC>

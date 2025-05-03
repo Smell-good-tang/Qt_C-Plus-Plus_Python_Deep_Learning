@@ -9,11 +9,11 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-namespace enum_class_python_deep_learning {
+namespace enum_class_python_dl {
 enum Model_categories
 {
-    Example_1 = 0,
-    Example_2   = 1
+    Self_FAGCFN = 0,
+    ALCFA_Net   = 1
 };
 }
 
@@ -26,8 +26,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btn_Example_1_clicked();
-    void on_btn_Example_2_clicked();
+    void on_btn_Self_FAGCFN_clicked();
+    void on_btn_ALCFA_Net_clicked();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
