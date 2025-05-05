@@ -235,8 +235,8 @@ void Python_deep_learning::on_btn_predict_clicked()
             dir.mkpath(targetDir_name);
         }
 
-        static QString modelDataPath    = ":/D:/OneDrive/QT/Qt_projects/For Win/Paper/";
-        static QString pythonScriptPath = ":/D:/OneDrive/QT/Qt_projects/For Win/Paper/resources/";
+        static QString modelDataPath    = ":/D:/OneDrive/QT/Qt_projects/For WinAndLinux/Paper/";
+        static QString pythonScriptPath = ":/D:/OneDrive/QT/Qt_projects/For WinAndLinux/Paper/resources/";
 
         // 复制资源文件
         copyFileIfNotExists(modelDataPath, DL_Name.modelWeight, DL_Path.modelWeight);

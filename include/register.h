@@ -29,10 +29,20 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
+    // 模板方法声明
+    template <typename T>
+    void closePresentPageAndShowNewPage(T * = nullptr)
+    {
+        this->setAttribute(Qt::WA_DeleteOnClose);
+        this->close();
+        auto widget = new T(nullptr, &font);
+        widget->show();
+    }
+
     // new对象，建在堆上
     QRegularExpressionValidator *IDnumber = nullptr, *reg_account = nullptr;
     QRegularExpression          *reg_accountExp = nullptr, *IDnumberExp = nullptr;
-    Ui::Register                  *ui;
+    Ui::Register                *ui;
 
     QSqlQuery query;
     QFont     font;

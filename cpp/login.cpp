@@ -24,13 +24,7 @@ void login::on_btn_cancel_clicked()
 }
 
 // 打开“注册”页面
-void login::on_btn_regist_clicked()
-{
-    this->setAttribute(Qt::WA_DeleteOnClose);
-    this->close();
-    Register *reg = new Register(nullptr, &font);
-    reg->show();
-}
+void login::on_btn_regist_clicked() { closePresentPageAndShowNewPage<Register>(); }
 
 // 账号匹配密码
 const bool login::matchAccountWithPassword(const user &user_info)
@@ -74,10 +68,7 @@ void login::on_btn_log_clicked()
         user_info.password = md_pwd.toHex();
         bool able_to_login = matchAccountWithPassword(user_info);
         if (able_to_login) {
-            this->setAttribute(Qt::WA_DeleteOnClose);
-            this->close();
-            MainWindow *w = new MainWindow(nullptr, &font);
-            w->show();
+            closePresentPageAndShowNewPage<MainWindow>();
         } else {
             forusers::messagebox_common(this, "注意", "登录失败，因为帐号或密码错误！！！", font);
             forusers::messagebox_common(this, "注意", "如果您还没有任何账户，请尽快注册！", font);

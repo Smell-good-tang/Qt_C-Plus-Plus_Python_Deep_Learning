@@ -33,6 +33,16 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
+    // 模板方法声明
+    template <typename T>
+    void closePresentPageAndShowNewPage(enum_class_python_dl::Model_categories modelCategories, T * = nullptr)
+    {
+        this->setAttribute(Qt::WA_DeleteOnClose);
+        this->close();
+        auto widget = new T(nullptr, modelCategories, &font);
+        widget->show();
+    }
+
     Ui::MainWindow *ui;
     QFont           font;
 };

@@ -31,10 +31,7 @@ Register::~Register()
 // 返回上一级页面
 void Register::on_btn_cancel_clicked()
 {
-    this->setAttribute(Qt::WA_DeleteOnClose);
-    this->close();
-    login *log = new login(nullptr, &font);
-    log->show();
+    closePresentPageAndShowNewPage<login>();
     return;
 }
 
@@ -129,10 +126,7 @@ void Register::on_btn_confirm_clicked()
             if (Registed) {
                 forusers::messagebox_common(this, "Congratulations!", "成功注册！！！然后准备登录！！", font);
                 // 返回登录页面
-                this->setAttribute(Qt::WA_DeleteOnClose);
-                this->close();
-                login *log = new login(nullptr, &font);
-                log->show();
+                closePresentPageAndShowNewPage<login>();
             } else {
                 forusers::messagebox_common(this, "注意", "抱歉，注册失败。请重试。", font);
             }

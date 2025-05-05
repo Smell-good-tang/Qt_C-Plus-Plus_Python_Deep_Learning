@@ -37,7 +37,18 @@ protected:
 
 private:
     const bool matchAccountWithPassword(const user &user_info);  // 账号是否与密码匹配
-    Ui::login *ui;                                               // new对象，建在堆上
+
+    // 模板方法声明
+    template <typename T>
+    void closePresentPageAndShowNewPage(T * = nullptr)
+    {
+        this->setAttribute(Qt::WA_DeleteOnClose);
+        this->close();
+        auto widget = new T(nullptr, &font);
+        widget->show();
+    }
+
+    Ui::login *ui;  // new对象，建在堆上
     QSqlQuery  query;
     QFont      font;
 };
