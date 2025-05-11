@@ -123,6 +123,9 @@ QPushButton:pressed {
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,1">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>

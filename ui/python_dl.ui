@@ -155,7 +155,7 @@ QLabel[interactive=&quot;true&quot;]:pressed {
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="8,9">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="4,4,9">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
@@ -185,6 +185,31 @@ QLabel[interactive=&quot;true&quot;]:pressed {
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="Te_realTimeProgress">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>实时诊断进度</string>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,10">

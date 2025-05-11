@@ -25,6 +25,35 @@ Python_deep_learning::Python_deep_learning(QWidget *parent, int model, QFont *fo
     isRunningPythonScript = false;
 
     ui->btn_terminate->setEnabled(false);
+
+    connect(
+        &process, &QProcess::readyRead, this,
+        [this]() {
+            static QStringList outputCode = {"Preprocessing", "Building adjacency matrix", "Generating heatmap with Grad-CAM format", "Predicting"};
+
+            // 从标准输出读取所有可用数据，并追加到 QTextEdit 中
+            QByteArray data = process.readAllStandardOutput().trimmed();
+            QString    code = QString::fromLocal8Bit(data.data());
+
+            if (outputCode.contains(code)) {
+                QString text = "未知行为...";
+                if (code == "Preprocessing") {
+                    text = "图像预处理中...";
+                } else if (code == "Building adjacency matrix") {
+                    text = "正在构造图像节点的邻接矩阵...";
+                } else if (code == "Generating heatmap with Grad-CAM format") {
+                    text = "生成 Grad-CAM 热图中...";
+                } else if (code == "Predicting") {
+                    text = "生成预测结果中...";
+                }
+                ui->Te_realTimeProgress->append(text);
+            } else if (code.endsWith(".jpg")) {
+                outputedFileName = code;
+            }
+        },
+        Qt::QueuedConnection);
+
+    connect(ui->Te_realTimeProgress, &QTextEdit::textChanged, this, [=]() { ui->Te_realTimeProgress->moveCursor(QTextCursor::End); });
 }
 
 Python_deep_learning::~Python_deep_learning() { delete ui; }
@@ -48,6 +77,7 @@ void Python_deep_learning::on_btn_switch_model_clicked()
     ui->upload_image->setText("上传图片");
     ui->heatmap->setText("热图");
     ui->predict_label->setText("预测");
+    ui->Te_realTimeProgress->clear();
 }
 
 void Python_deep_learning::on_btn_select_image_clicked()
@@ -77,6 +107,7 @@ void Python_deep_learning::on_btn_select_image_clicked()
         ui->predict_label->clear();
         ui->heatmap->setText("热图");
         ui->predict_label->setText("预测");
+        ui->Te_realTimeProgress->clear();
     }
 }
 
@@ -162,6 +193,7 @@ QString Python_deep_learning::executePythonScript(const QStringList &arguments, 
 {
     QString python_env_path = "D:/Python_envs/python_3.9.13_2_advanced_pytorch/Scripts/python.exe";
 
+    process.close();
     process.setProgram(python_env_path);
     process.setArguments(arguments);
     process.setWorkingDirectory(workingDir);
@@ -172,7 +204,7 @@ QString Python_deep_learning::executePythonScript(const QStringList &arguments, 
         return QString();
     }
 
-    return process.readAllStandardOutput().trimmed();
+    return outputedFileName;
 }
 
 void Python_deep_learning::on_btn_predict_clicked()
@@ -189,6 +221,12 @@ void Python_deep_learning::on_btn_predict_clicked()
 
     ui->btn_predict->setEnabled(false);
     ui->btn_terminate->setEnabled(true);
+
+    ui->heatmap->clear();
+    ui->predict_label->clear();
+    ui->heatmap->setText("热图");
+    ui->predict_label->setText("预测");
+    ui->Te_realTimeProgress->clear();
 
     auto waitForExecutePythonScriptThread = QThread::create([this]() {
         // 设置模型目录和资源文件
@@ -249,12 +287,15 @@ void Python_deep_learning::on_btn_predict_clicked()
         copyFileIfNotExists(pythonScriptPath, DL_Name.preGCNScript, DL_Path.preGCNScript);
         copyFileIfNotExists(modelDataPath, DL_Name.data, DL_Path.data);
 
+        ui->Te_realTimeProgress->append("正在生成热图...");
+
         // 执行 heatmap 脚本
         QString output = executePythonScript({DL_Name.heatmapScript, "--r_heatmap", imagePath}, targetDir_name);
         if (output.isEmpty()) return;
 
         // 显示 heatmap 图像
-        QPixmap heatmapPixmap(targetDir_name + output);
+        QString heatmapImagePath = targetDir_name + output;
+        QPixmap heatmapPixmap(heatmapImagePath);
         QSize   labelSize = ui->heatmap->size();
         QSize   imageSize = ui->upload_image->pixmap().size();
 
@@ -265,12 +306,16 @@ void Python_deep_learning::on_btn_predict_clicked()
         QMetaObject::invokeMethod(
             this, [this, heatmapPixmap]() { ui->heatmap->setPixmap(heatmapPixmap); }, Qt::QueuedConnection);
 
+        ui->Te_realTimeProgress->append("热图文件路径：" + heatmapImagePath);
+        ui->Te_realTimeProgress->append("正在生成诊断结果...");
+
         // 执行 predict 脚本
         output = executePythonScript({DL_Name.predictScript, "--r", imagePath}, targetDir_name);
         if (output.isEmpty()) return;
 
         // 显示预测结果图像
-        QPixmap predictPixmap(targetDir_name + output);
+        QString predictImagePath = targetDir_name + output;
+        QPixmap predictPixmap(predictImagePath);
         imageSize = ui->upload_image->pixmap().size();
         calculate_appropriate_image_size(imageSize, labelSize);
         predictPixmap = predictPixmap.scaled(imageSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -278,6 +323,8 @@ void Python_deep_learning::on_btn_predict_clicked()
         // 确保在主线程中执行以下操作
         QMetaObject::invokeMethod(
             this, [this, predictPixmap]() { ui->predict_label->setPixmap(predictPixmap); }, Qt::QueuedConnection);
+
+        ui->Te_realTimeProgress->append("预测结果文件路径：" + predictImagePath);
     });
 
     connect(waitForExecutePythonScriptThread, &QThread::finished, this, [waitForExecutePythonScriptThread, this]() {

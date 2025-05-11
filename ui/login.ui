@@ -139,7 +139,7 @@ QPushButton:pressed {
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,0">
             <property name="spacing">
-             <number>20</number>
+             <number>0</number>
             </property>
             <property name="leftMargin">
              <number>20</number>

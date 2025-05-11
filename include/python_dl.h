@@ -72,6 +72,7 @@ private:
     QFont    font;
     bool     isRunningPythonScript;
     QProcess process;
+    QString  outputedFileName;
 };
 
 #endif  // PYTHON_DL_H
